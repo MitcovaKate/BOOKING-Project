@@ -1,0 +1,17 @@
+{
+    "name": "student/booking",
+    "type": "project",
+    "license": "Custom",
+    "autoload": {
+        "psr-4": {
+            "Student\\Booking\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kate"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
