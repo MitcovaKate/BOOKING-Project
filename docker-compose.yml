@@ -1,15 +1,43 @@
 version: '3.8'
 
-
 services:
-  oop-app-container:
+
+  php-container:
     # image: php:8.3-apache
-    build: 
+    container_name: booking_php
+    build:
       context: .
       dockerfile: Dockerfile
-    restart: no
+
+    restart: 'no'
+
     volumes:
       - ./website:/var/www/html/
 
-    ports:
-      - 8088:80
+    ports: 
+      - 8089:80
+    networks:
+      - booking-net
+  
+  mariadb-container:
+    container_name: booking_mariadb
+    image: mariadb:10.11.9-jammy
+    restart: 'no'
+    environment:
+      MARIADB_DATABASE: booking
+      MARIADB_USER: booking
+      MARIADB_PASSWORD: booking
+      MARIADB_ROOT_PASSWORD: booking
+
+    ports: 
+      - 13306:3306
+
+    volumes:
+      - ./data:/var/lib/mysql
+      
+    networks:
+      - booking-net
+
+networks:
+  booking-net:
+
