@@ -1,6 +1,8 @@
 <?
 // initialisation of the main app parts
 require_once './vendor/autoload.php';
+require_once './src/model.php';
+require_once './src/view.php';
 #twig config
 $loader = new \Twig\Loader\FilesystemLoader('./templates');
 $twig = new \Twig\Environment($loader, [

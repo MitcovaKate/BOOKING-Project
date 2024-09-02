@@ -1,7 +1,6 @@
 <? 
 require_once './src/bootstrap.php';
-require_once './src/model.php';
-require_once './src/view.php';
+
 
 
 // $tours=[
@@ -9,7 +8,22 @@ require_once './src/view.php';
 //     ['title'=>'Cheap Tour','price'=>'10Euro'],
 //     ['title'=>'Optimal Tour','price'=>'50Euro']
 // ];
-$tours=getALLTours();
-$title='Our Fall Tours';
-renderHome($title,$tours);
+
+
+$page=$_GET['page'] ?? 'home';
+
+if($page==='home'){
+
+  $tours=getALLTours();
+  $title='Our Fall Tours';
+  renderHome($title,$tours);
+
+} else if ($page==='reviews'){
+
+    $reviews=getALLReviews();
+    $title='What people think';
+    renderReviews($title,$reviews);
+} else{
+    render404();
+}
 
