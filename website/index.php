@@ -14,16 +14,16 @@ $page=$_GET['page'] ?? 'home';
 
 if($page==='home'){
 
-  $tours=getALLTours();
+  $tours=getAllData('tours');
   $title='Our Fall Tours';
-  renderHome($title,$tours);
+  renderPage($title,'home',$tours);
 
 } else if ($page==='reviews'){
 
-    $reviews=getALLReviews();
+    $reviews=getAllData('reviews');
     $title='What people think';
-    renderReviews($title,$reviews);
+    renderPage($title,'reviews',$reviews);
 } else{
-    render404();
+    renderPage('Page not found','404');
 }
 
