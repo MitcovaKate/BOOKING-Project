@@ -23,7 +23,12 @@ if($page==='home'){
     $reviews=getAllData('reviews');
     $title='What people think';
     renderPage($title,'reviews',$reviews);
-} else{
+} else if($page==='test'){
+  $tour =new Tour(100,'Super Tour from ORM',1000);
+  $tour->save();
+}
+
+else{
     renderPage('Page not found','404');
 }
 

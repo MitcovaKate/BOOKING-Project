@@ -22,16 +22,36 @@
 function getAllData($table) {
     global $pdo;
 
-    // Connect to the database (assuming MySQL PDO)
-    // ... (replace with your database connection code if necessary)
+//     // Connect to the database (assuming MySQL PDO)
+//     // ... (replace with your database connection code if necessary)
 
-    // Prepare and execute the query
+//     // Prepare and execute the query
     $stmt = $pdo->query("SELECT * FROM $table");
 
-    // Fetch all rows as an associative array
+//     // Fetch all rows as an associative array
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    return $data;
+     return $data;
 }
 
-// Usage:
+// tour model
+class Tour{
+    private int $id;
+    private  string $title;
+    private int $price;
+
+    public function __construct(int $id, string $title, int $price)
+    {
+        $this->id=$id;
+        $this->title=$title;
+        $this->price=$price;
+    }
+    public function save(){
+        global $pdo;
+        $sql='INSERT INTO tours VALUES(?,?,?)';
+        $stmt=$pdo->prepare($sql);
+        $stmt->execute([$this->id, $this->title, $this->price]);
+    }
+}
+
+
