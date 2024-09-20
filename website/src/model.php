@@ -34,24 +34,56 @@ function getAllData($table) {
      return $data;
 }
 
-// tour model
-class Tour{
-    private int $id;
-    private  string $title;
-    private int $price;
 
-    public function __construct(int $id, string $title, int $price)
-    {
-        $this->id=$id;
-        $this->title=$title;
-        $this->price=$price;
+//  HW3 
+
+class Money {
+    private int $value ;
+    private string $currency;
+
+    public function __construct(int $value , string $currency) {
+        $this->setvalue ($value );
+        $this->setCurrency($currency); 
+
     }
-    public function save(){
-        global $pdo;
-        $sql='INSERT INTO tours VALUES(?,?,?)';
-        $stmt=$pdo->prepare($sql);
-        $stmt->execute([$this->id, $this->title, $this->price]);
+
+    public function setvalue (int $value ): void {
+        $this->value  = min(max($value , PHP_INT_MIN), PHP_INT_MAX);
+    }
+
+    public function getvalue (): int {
+        return $this->value ;
+    }
+
+    public function setCurrency(string $currency): void {
+        $allowedCurrencies = ['EUR', 'MDL', 'USD'];
+        if (empty($currency) || !in_array($currency, $allowedCurrencies)) {
+            throw new InvalidArgumentException('Invalid currency. Allowed currencies are: ' . implode(', ', $allowedCurrencies));
+        }
+        $this->currency = $currency;
+    }
+
+    public function getCurrency(): string {
+        return $this->currency;
     }
 }
+// tour model
 
+class Tour {
+    private int $id;
+    private string $title;
+    private Money $price; 
 
+    public function __construct(int $id, string $title, Money $price) {
+        $this->id = $id;
+        $this->title = $title;
+        $this->price = $price;
+    }
+
+    public function save() {
+        global $pdo;
+        $sql = 'INSERT INTO tours VALUES(?,?,?)';
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$this->id, $this->title, $this->price]); 
+    }
+}

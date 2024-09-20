@@ -24,7 +24,7 @@ if($page==='home'){
     $title='What people think';
     renderPage($title,'reviews',$reviews);
 } else if($page==='test'){
-  $tour =new Tour(100,'Super Tour from ORM',1000);
+  $tour =new Tour(100,'Super Tour from ORM',Money 10, 'MDL');
   $tour->save();
 }
 
