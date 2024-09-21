@@ -76,3 +76,17 @@ templating
 BROWSER <--- res (HTML) <--- twig render('home.html.twig') <--- data <--- mysqli <--- docker <--- mariadb server ^ | booking | tours | data
 
 [HOST MACHINE] localhost <--- 13306:3306 --> [mariadb] ^ | v <--- 8088:80 -----> [php] ^ | PDO('localhost')
+
+query parameter
+
+?page=...
+
+                    home
+                   +-----> renderHome(...)
+                  /
+index.php ---------> ? \ reviews +-----> renderReviews(...) ^ | 404 | -----> render404() | router
+
+               OPTOMOZATIONS:
+                - url: ?page=reviews -> /reviews (url rewrite) / webserver
+                - DRY: model (php)
+                - DRY: view (php)
