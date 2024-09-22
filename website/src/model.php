@@ -94,4 +94,13 @@ class Tour {
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$this->id]);
     }
+    public static function getAll(){
+       global $pdo;
+       $stmt=$pdo->query('SELECT * FROM tours');
+       $tours=$stmt->fetchAll(PDO::FETCH_ASSOC);
+       return $tours;
+    }
 }
+
+
+$tours=Tour::getAll();
