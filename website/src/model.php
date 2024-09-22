@@ -84,6 +84,14 @@ class Tour {
         global $pdo;
         $sql = 'INSERT INTO tours VALUES(?,?,?)';
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$this->id, $this->title, $this->price]); 
+        $stmt->execute([$this->id, $this->title, $this->price->getvalue()]); 
+    }
+
+    // HW 4
+    public function delete() {
+        global $pdo;
+        $sql = 'DELETE FROM tours WHERE id = ?';
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$this->id]);
     }
 }

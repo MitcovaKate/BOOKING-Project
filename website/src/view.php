@@ -20,7 +20,7 @@
 //   global $twig; 
 // $template = $twig->load('404.html.twig');
 
-// print($template->render([])); ren
+// print($template->render([])); 
 // }
 
 // DRY for 3 functions 
