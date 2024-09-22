@@ -70,9 +70,9 @@ class Money {
 // tour model
 
 class Tour {
-    private int $id;
-    private string $title;
-    private Money $price; 
+    public int $id;
+    public string $title;
+    public  Money $price; 
 
     public function __construct(int $id, string $title, Money $price) {
         $this->id = $id;
@@ -97,7 +97,14 @@ class Tour {
     public static function getAll(){
        global $pdo;
        $stmt=$pdo->query('SELECT * FROM tours');
-       $tours=$stmt->fetchAll(PDO::FETCH_ASSOC);
+       $tours_result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+       $tours=[];
+
+       //loop
+       //manual hydration
+       foreach($tours_result as $tour_data){
+        $tours[]=new Tour($tour_data['id'],$tour_data['title'],$tour_data['price']);
+       }
        return $tours;
     }
 }

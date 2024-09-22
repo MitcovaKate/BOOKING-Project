@@ -14,7 +14,7 @@ $page=$_GET['page'] ?? 'home';
 
 if($page==='home'){
 
-  $tours=getAllData('tours');
+  $tours=Tour::getAll();
   $title='Our Fall Tours';
   renderPage($title,'home',$tours);
 
