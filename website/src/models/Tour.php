@@ -1,5 +1,5 @@
 <?
-
+namespace Student\Booking\models;
 // function getALLTours(){
 //     global $pdo;
 //     //conect to db / fetch data / only mysgl pdo
@@ -29,7 +29,7 @@ function getAllData($table) {
     $stmt = $pdo->query("SELECT * FROM $table");
 
 //     // Fetch all rows as an associative array
-    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $data = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
      return $data;
 }
@@ -58,7 +58,7 @@ class Money {
     public function setCurrency(string $currency): void {
         $allowedCurrencies = ['EUR', 'MDL', 'USD'];
         if (empty($currency) || !in_array($currency, $allowedCurrencies)) {
-            throw new InvalidArgumentException('Invalid currency. Allowed currencies are: ' . implode(', ', $allowedCurrencies));
+            throw new \InvalidArgumentException('Invalid currency. Allowed currencies are: ' . implode(', ', $allowedCurrencies));
         }
         $this->currency = $currency;
     }
@@ -67,37 +67,32 @@ class Money {
         return $this->currency;
     }
 }
-// tour model
-
-class Tour {
+class Tour extends Model{
     public int $id;
     public string $title;
     public  Money $price; 
 
-    public function __construct(int $id, string $title, Money $price) {
+    public function __construct(int $id=0, string $title='', Money $price=0) {
         $this->id = $id;
         $this->title = $title;
         $this->price = $price;
     }
 
     public function save() {
-        global $pdo;
         $sql = 'INSERT INTO tours VALUES(?,?,?)';
-        $stmt = $pdo->prepare($sql);
+        $stmt = static::$pdo->prepare($sql);
         $stmt->execute([$this->id, $this->title, $this->price->getvalue()]); 
     }
 
     // HW 4
     public function delete() {
-        global $pdo;
         $sql = 'DELETE FROM tours WHERE id = ?';
-        $stmt = $pdo->prepare($sql);
+        $stmt = static::$pdo->prepare($sql);
         $stmt->execute([$this->id]);
     }
     public static function getAll(){
-       global $pdo;
-       $stmt=$pdo->query('SELECT * FROM tours');
-       $tours_result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+       $stmt=static::$pdo->query('SELECT * FROM tours');
+       $tours_result=$stmt->fetchAll(\PDO::FETCH_ASSOC);
        $tours=[];
 
        //loop
@@ -107,7 +102,16 @@ class Tour {
        }
        return $tours;
     }
-}
+
+    public static function getOne(int $id){
+        $stmt=static::$pdo->prepare('SELECT * FROM product WHERE id =?');
+        $stmt->execute([$id]);
+        $stmt->setFetchMode(\PDO::FETCH_CLASS, '\Student\Booking\models\Tour');
+        $tour=$stmt->fetch();
+       
+        return $tour;
+    }
+} 
 
 
 $tours=Tour::getAll();

@@ -1,7 +1,8 @@
 <?
 // initialisation of the main app parts
 require_once './vendor/autoload.php';
-require_once './src/model.php';
+use \Student\Booking\models\Model;
+
 require_once './src/view.php';
 #twig config
 $loader = new \Twig\Loader\FilesystemLoader('./templates');
