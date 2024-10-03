@@ -33,5 +33,8 @@ require_once './vendor/autoload.php';
 // }
 
 use Student\Booking\models\Tour;
+use Student\Booking\models\Money;
 $page =$GET['page'] ?? 'home';
 $tours= Tour::getAll();
+$price=new Money(1,1000,'MDL');
+$price->save();

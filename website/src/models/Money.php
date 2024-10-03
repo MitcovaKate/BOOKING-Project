@@ -32,4 +32,10 @@ class Money extends Model {
     public function getCurrency(): string {
         return $this->currency;
     }
+
+    public function save() :void{
+        $sql = 'INSERT INTO money VALUES(?,?,?)';
+        $stmt = static::$pdo->prepare($sql);
+        $stmt->execute([$this->id, $this->amount, $this->currency]); 
+    }
 }
