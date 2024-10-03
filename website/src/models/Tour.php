@@ -35,38 +35,9 @@ function getAllData($table) {
 }
 
 
-//  HW3 
 
-class Money {
-    private int $value ;
-    private string $currency;
 
-    public function __construct(int $value , string $currency) {
-        $this->setvalue ($value );
-        $this->setCurrency($currency); 
 
-    }
-
-    public function setvalue (int $value ): void {
-        $this->value  = min(max($value , PHP_INT_MIN), PHP_INT_MAX);
-    }
-
-    public function getvalue (): int {
-        return $this->value ;
-    }
-
-    public function setCurrency(string $currency): void {
-        $allowedCurrencies = ['EUR', 'MDL', 'USD'];
-        if (empty($currency) || !in_array($currency, $allowedCurrencies)) {
-            throw new \InvalidArgumentException('Invalid currency. Allowed currencies are: ' . implode(', ', $allowedCurrencies));
-        }
-        $this->currency = $currency;
-    }
-
-    public function getCurrency(): string {
-        return $this->currency;
-    }
-}
 class Tour extends Model{
     public int $id;
     public string $title;
