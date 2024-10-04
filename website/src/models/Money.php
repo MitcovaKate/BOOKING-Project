@@ -38,4 +38,12 @@ class Money extends Model {
         $stmt = static::$pdo->prepare($sql);
         $stmt->execute([$this->id, $this->amount, $this->currency]); 
     }
-}
+    public static function getOneMoney(int $id): ?Money {
+        $stmt=static::$pdo->prepare('SELECT * FROM money WHERE id =?');
+        $stmt->execute([$id]);
+        $stmt->setFetchMode(\PDO::FETCH_CLASS, '\Student\Booking\models\Money');
+        $money=$stmt->fetch();
+       
+        return $money;
+    }
+    }

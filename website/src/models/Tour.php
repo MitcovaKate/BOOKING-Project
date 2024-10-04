@@ -61,25 +61,33 @@ class Tour extends Model{
         $stmt = static::$pdo->prepare($sql);
         $stmt->execute([$this->id]);
     }
-    public static function getAll(){
-       $stmt=static::$pdo->query('SELECT * FROM tours');
-       $tours_result=$stmt->fetchAll(\PDO::FETCH_ASSOC);
-       $tours=[];
+//hW 5 refactor with adding Money
+    public static function getAll(): array {
+        $stmt = static::$pdo->query('SELECT * FROM tours');
+        $tours_result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $tours = [];
 
-       //loop
-       //manual hydration
-       foreach($tours_result as $tour_data){
-        $tours[]=new Tour($tour_data['id'],$tour_data['title'],$tour_data['price']);
-       }
-       return $tours;
+        foreach ($tours_result as $tour_data) {
+            $tours[] = new Tour(
+                $tour_data['id'],
+                $tour_data['title'],
+                Money::getOneMoney($tour_data['price'])
+            );
+        }
+
+        return $tours;
     }
 
-    public static function getOne(int $id){
-        $stmt=static::$pdo->prepare('SELECT * FROM product WHERE id =?');
+    public static function getOne(int $id): ?Tour {
+        $stmt = static::$pdo->prepare('SELECT * FROM tours WHERE id = ?');
         $stmt->execute([$id]);
         $stmt->setFetchMode(\PDO::FETCH_CLASS, '\Student\Booking\models\Tour');
-        $tour=$stmt->fetch();
-       
+        $tour = $stmt->fetch();
+
+        if ($tour) {
+            $tour->price = Money::getOneMoney($tour->price);
+        }
+
         return $tour;
     }
 } 
