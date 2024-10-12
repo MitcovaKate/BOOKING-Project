@@ -34,7 +34,14 @@ require_once './vendor/autoload.php';
 
 use Student\Booking\models\Tour;
 use Student\Booking\models\Money;
+use Student\Booking\models\Client;
+use Student\Booking\models\Order;
 $page =$GET['page'] ?? 'home';
 $tours= Tour::getAll();
 $price=new Money(1,1000,'MDL');
 $price->save();
+$client=new Client(fullName:'Jon', contactEmail:'', contactPhone:'123234', id:10);
+$client->save();
+$cost=new Money(amount:10000,currency:'EUR');
+$order=new Order(client:$client,cost:$cost,id:10);
+$order->save();
