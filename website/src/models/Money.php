@@ -2,9 +2,9 @@
 <?
 namespace Student\Booking\models;
 class Money extends Model {
-    private int $id;
-    private int $amount ;
-    private string $currency;
+    public int $id;
+    public int $amount ;
+    public string $currency;
 
     public function __construct(int $id=0, int $amount, string $currency) {
         $this->id=$id;

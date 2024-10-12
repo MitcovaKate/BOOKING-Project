@@ -36,6 +36,8 @@ use Student\Booking\models\Tour;
 use Student\Booking\models\Money;
 use Student\Booking\models\Client;
 use Student\Booking\models\Order;
+use Student\Booking\routes\Route;
+use Student\Booking\routes\RouteParam;
 $page =$GET['page'] ?? 'home';
 $tours= Tour::getAll();
 $price=new Money(1,1000,'MDL');
@@ -45,3 +47,7 @@ $client->save();
 $cost=new Money(amount:10000,currency:'EUR');
 $order=new Order(client:$client,cost:$cost,id:10);
 $order->save();
+
+$route1=new Route('/');
+$route2=new Route('/contacts');
+$route3=new RouteParam('/tour{id}');
